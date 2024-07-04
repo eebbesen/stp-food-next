@@ -38,6 +38,18 @@ npm run lint
 npm run prettier
 ```
 
+## Data
+This application loads data from a Google sheet with read-only access restricted to a service account.
+
+1. Create a project https://console.cloud.google.com/projectcreate
+1. Create a service account for your project https://console.cloud.google.com/iam-admin/serviceaccounts
+1. Use the service account credentials to populate your environment variables https://googleapis.dev/nodejs/googleapis/latest/sheets/index.html#service-account-credentials
+
+`GOOGLE_PROJECT_ID` is the ID of the project
+`GOOGLE_EMAIL` is the email for the service account
+`GOOGLE_PRIVATE_KEY` is the service account's private key
+`SHEET_ID` is the ID of the sheet
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
