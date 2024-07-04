@@ -21,6 +21,5 @@ export async function getData() {
     range: 'A1:Z100',
   });
 
-  console.log('RESPONSE', response.data.values);
-  return await response.data;
+  return await response.data.values;
 }
