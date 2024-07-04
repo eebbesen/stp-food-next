@@ -1,6 +1,6 @@
 "use client"
 
-import {getData} from './googleData';
+import { getDeals } from './googleData';
 import { useState, useEffect } from 'react'
 
 import Image from 'next/image';
@@ -10,7 +10,7 @@ export default function Home() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    getData()
+    getDeals()
       .then((data) => {
         setData(data)
         setLoading(false)

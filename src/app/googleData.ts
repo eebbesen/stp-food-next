@@ -2,8 +2,12 @@
 
 const {google} = require('googleapis');
 
-const scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
 
+const places = 'Places';
+const deals = 'Deals';
+const log = 'Log';
+
+const scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
 const auth = new google.auth.GoogleAuth({
   credentials:{
     client_email: process.env.GOOGLE_EMAIL,
@@ -11,15 +15,26 @@ const auth = new google.auth.GoogleAuth({
     project_id: process.env.GOOGLE_PROJECT_ID},
   scopes: scopes,
 });
-
 const sheets = google.sheets({version: 'v4', auth: auth});
 
 
-export async function getData() {
+async function getData(sheet: string) {
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
-    range: 'A1:Z100',
+    range: sheet,
   });
 
   return await response.data.values;
+}
+
+export async function getPlaces() {
+  return await getData(places);
+}
+
+export async function getDeals() {
+  return await getData(deals);
+}
+
+export async function getLog() {
+  return await getData(log);
 }
