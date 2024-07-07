@@ -22,7 +22,7 @@ async function getData(sheet: string) {
     spreadsheetId: process.env.SHEET_ID,
     range: sheet,
   });
-
+  // console.log(response.data.values);
   return await response.data.values;
 }
 
