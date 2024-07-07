@@ -29,16 +29,19 @@ npm run test
 ```
 
 ### Lint
+
 ```bash
 npm run lint
 ```
 
 ### Prettier
+
 ```bash
 npm run prettier
 ```
 
 ## Data
+
 This application loads data from a Google sheet with read-only access restricted to a service account.
 
 1. Create a project https://console.cloud.google.com/projectcreate

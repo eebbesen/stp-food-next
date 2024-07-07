@@ -1,7 +1,7 @@
-"use client"
+'use client';
 
 import { getDeals } from './googleData';
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 import Image from 'next/image';
 
@@ -10,15 +10,14 @@ export default function Home() {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    getDeals()
-      .then((data) => {
-        setData(data)
-        setLoading(false)
-      })
-  }, [])
+    getDeals().then((data) => {
+      setData(data);
+      setLoading(false);
+    });
+  }, []);
 
-  if (isLoading) return <p>Loading...</p>
-  if (!data) return <p>No profile data</p>
+  if (isLoading) return <p>Loading...</p>;
+  if (!data) return <p>No profile data</p>;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">

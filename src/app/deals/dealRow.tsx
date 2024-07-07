@@ -1,4 +1,4 @@
-export default function DealRow({ placeName, placeAddress, dealDesc}) {
+export default function DealRow({ placeName, placeAddress, dealDesc }) {
   return (
     <tr>
       <td>{placeName}</td>

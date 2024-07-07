@@ -1,22 +1,21 @@
-"use server"
+'use server';
 
-const {google} = require('googleapis');
-
+const { google } = require('googleapis');
 
 const places = 'Places';
 const deals = 'Deals';
 const log = 'Log';
 
-const scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
+const scopes = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const auth = new google.auth.GoogleAuth({
-  credentials:{
+  credentials: {
     client_email: process.env.GOOGLE_EMAIL,
     private_key: process.env.GOOGLE_PRIVATE_KEY,
-    project_id: process.env.GOOGLE_PROJECT_ID},
+    project_id: process.env.GOOGLE_PROJECT_ID,
+  },
   scopes: scopes,
 });
-const sheets = google.sheets({version: 'v4', auth: auth});
-
+const sheets = google.sheets({ version: 'v4', auth: auth });
 
 async function getData(sheet: string) {
   const response = await sheets.spreadsheets.values.get({
