@@ -1,5 +1,4 @@
 import DealHeader from '../../../../src/app/deals/dealHeader';
-import { mapAddress } from '../../../../src/app/lib/util';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 

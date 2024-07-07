@@ -1,9 +1,9 @@
 export default function DealHeader() {
   return (
-    <th className="dealHeader">
-      <td>Place</td>
-      <td>Deal</td>
-      <td>Address</td>
-    </th>
+    <tr className="dealHeader">
+      <th>Place</th>
+      <th>Deal</th>
+      <th>Address</th>
+    </tr>
   );
 }
