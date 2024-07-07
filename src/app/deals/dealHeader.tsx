@@ -1,6 +1,6 @@
 export default function DealHeader() {
   return (
-    <th>
+    <th className="dealHeader">
       <td>Place</td>
       <td>Deal</td>
       <td>Address</td>
