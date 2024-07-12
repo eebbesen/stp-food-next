@@ -27,7 +27,8 @@ export default function DealTable() {
       </thead>
       <tbody>
         {dealRows.map((deal: string[]) => (
-          <DealRow columns={deal} />
+          // todo: better key algorithm
+          <DealRow key={deal.toString()} columns={deal} />
         ))}
       </tbody>
     </table>
