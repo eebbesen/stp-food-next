@@ -1,9 +1,9 @@
-export default function DealHeader() {
+export default function DealHeader({ headers }: { headers: string[] }) {
   return (
     <tr className="dealHeader">
-      <th>Place</th>
-      <th>Deal</th>
-      <th>Address</th>
+      {headers.map((column: string) => (
+        <th key={column}>{column}</th>
+      ))}
     </tr>
   );
 }

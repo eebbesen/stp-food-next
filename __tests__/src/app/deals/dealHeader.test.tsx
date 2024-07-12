@@ -3,12 +3,12 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 
 describe('DealHeader', () => {
-  it('renders the deal header', () => {
+  it('renders the deal header with headers', () => {
     const address = '1600 Grand Ave, Saint Paul, MN 55105';
     render(
       <table>
         <thead>
-          <DealHeader />
+          <DealHeader headers={['Place', 'Deal', 'Address']} />
         </thead>
       </table>,
     );
@@ -16,5 +16,15 @@ describe('DealHeader', () => {
     expect(screen.getByText('Place')).toBeInTheDocument();
     expect(screen.getByText('Deal')).toBeInTheDocument();
     expect(screen.getByText('Address')).toBeInTheDocument();
+  });
+
+  it('gracefully returns when no headers are provided', () => {
+    render(
+      <table>
+        <thead>
+          <DealHeader headers={[]} />
+        </thead>
+      </table>,
+    );
   });
 });
