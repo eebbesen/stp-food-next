@@ -1,4 +1,4 @@
-import { getDeals } from '../googleData';
+import { getDeals } from '../lib/googleData';
 import { useState, useEffect } from 'react';
 import DealHeader from './dealHeader';
 import DealRow from './dealRow';
