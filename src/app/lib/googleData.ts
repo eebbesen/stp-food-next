@@ -18,11 +18,13 @@ const auth = new google.auth.GoogleAuth({
 const sheets = google.sheets({ version: 'v4', auth: auth });
 
 async function getData(sheet: string) {
+  const time = Date.now();
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
     range: sheet,
   });
   // console.log(response.data.values);
+  console.log('INFO', 'getData call took', Date.now() - time, 'ms');
   return await response.data.values;
 }
 
