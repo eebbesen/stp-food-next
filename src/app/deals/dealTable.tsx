@@ -1,21 +1,22 @@
-import { getDeals } from '../lib/googleData';
+import { getData } from '../lib/googleData';
 import { useState, useEffect } from 'react';
 import DealHeader from './dealHeader';
 import DealRow from './dealRow';
 
 export default function DealTable() {
-  const [deals, setDeals] = useState<string[][]>([]);
+  const [deals, setDeals] = useState<string[][] | null>(null);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    getDeals().then((dealsData) => {
+    getData('Deals').then((dealsData) => {
+      if (dealsData === undefined) return;
       setDeals(dealsData);
       setLoading(false);
     });
   }, []);
 
   if (isLoading) return <p>Loading...</p>;
-  if (!deals) return <p>No deal data</p>;
+  if (!deals || deals.length === 0) return <p>No deal data</p>;
 
   const headers: string[] = deals[0];
   const dealRows: string[][] = deals.slice(1);
