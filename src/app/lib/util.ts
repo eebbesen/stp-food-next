@@ -1,4 +1,4 @@
-import { ColumnType } from './columnType';
+import { ColumnType } from './ColumnType';
 
 // convert address to Google Maps URL
 export function mapAddress(address: string): string {

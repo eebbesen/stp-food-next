@@ -1,17 +1,22 @@
-import { getData } from '../lib/googleData';
 import { useState, useEffect } from 'react';
+
+import { getData } from '../lib/googleData';
+import { getColumnType, getForDay } from '../lib/util';
+import { ColumnType } from '../lib/ColumnType';
 import DealHeader from './dealHeader';
 import DealRow from './dealRow';
 
-export default function DealTable() {
+export default function DealTable({
+  todayOnly,
+}: Readonly<{ todayOnly?: boolean }>) {
   const [deals, setDeals] = useState<string[][] | null>(null);
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getData('Deals').then((dealsData) => {
       if (dealsData === undefined) return;
       setDeals(dealsData);
-      setLoading(false);
+      setIsLoading(false);
     });
   }, []);
 
@@ -19,7 +24,17 @@ export default function DealTable() {
   if (!deals || deals.length === 0) return <p>No deal data</p>;
 
   const headers: string[] = deals[0];
-  const dealRows: string[][] = deals.slice(1);
+  const headerTypes: ColumnType[] = headers.map((header) =>
+    getColumnType(header),
+  );
+  let dealRows: string[][] = deals.slice(1);
+
+  if (todayOnly) {
+    const dayIndex = headerTypes.findIndex(
+      (header) => header === ColumnType.DAY_OF_WEEK,
+    );
+    dealRows = getForDay(dealRows, dayIndex, new Date().getDay());
+  }
 
   return (
     <table className="dealTable">
