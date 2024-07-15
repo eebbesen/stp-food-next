@@ -1,3 +1,5 @@
+import { ColumnType } from './columnType';
+
 // convert address to Google Maps URL
 export function mapAddress(address: string): string {
   return `https://www.google.com/maps/place/${encodeURIComponent(address)}`;
@@ -21,4 +23,17 @@ export function displayAddress(address: string): string {
   }
 
   return ret;
+}
+
+// extract column type from column name emoji
+export function getColumnType(column: string): ColumnType {
+  if (column.endsWith('📍')) {
+    return ColumnType.ADDRESS;
+  } else if (column.endsWith('🗓️')) {
+    return ColumnType.DAY_OF_WEEK;
+  } else if (column.endsWith('🔑')) {
+    return ColumnType.KEY;
+  }
+
+  return ColumnType.NONE;
 }

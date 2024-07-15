@@ -1,4 +1,9 @@
-import { mapAddress, displayAddress } from '../../../../src/app/lib/util';
+import {
+  mapAddress,
+  displayAddress,
+  getColumnType,
+} from '../../../../src/app/lib/util';
+import { ColumnType } from '../../../../src/app/lib/ColumnType';
 
 describe('mapAddress', () => {
   it('should convert address to Google Maps URL', () => {
@@ -30,5 +35,31 @@ describe('displayAddress', () => {
     const expected = '1600 Grand Ave, Minneapolis, MN 55105';
 
     expect(displayAddress(address)).toEqual(expected);
+  });
+});
+
+describe('getColumnType', () => {
+  it('should return ADDRESS for address column', () => {
+    const column = 'Address📍';
+
+    expect(getColumnType(column)).toBe(ColumnType.ADDRESS);
+  });
+
+  it('should return KEY for key column', () => {
+    const column = 'PlaceID🔑';
+
+    expect(getColumnType(column)).toBe(ColumnType.KEY);
+  });
+
+  it('should return DAY_OF_WEEK for address column', () => {
+    const column = 'Deal Day🗓️';
+
+    expect(getColumnType(column)).toBe(ColumnType.DAY_OF_WEEK);
+  });
+
+  it('should return NONE for untyped column', () => {
+    const column = 'Deal Day';
+
+    expect(getColumnType(column)).toBe(ColumnType.NONE);
   });
 });
