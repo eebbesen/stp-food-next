@@ -5,6 +5,7 @@ import { getColumnType, getForDay } from '../lib/util';
 import { ColumnType } from '../lib/ColumnType';
 import DealHeader from './dealHeader';
 import DealRow from './dealRow';
+import { DayOfWeekRange } from '../lib/util';
 
 export default function DealTable({
   todayOnly,
@@ -33,7 +34,8 @@ export default function DealTable({
     const dayIndex = headerTypes.findIndex(
       (header) => header === ColumnType.DAY_OF_WEEK,
     );
-    dealRows = getForDay(dealRows, dayIndex, new Date().getDay());
+    const currentDay: DayOfWeekRange = new Date().getDay() as DayOfWeekRange;
+    dealRows = getForDay(dealRows, dayIndex, currentDay);
   }
 
   return (

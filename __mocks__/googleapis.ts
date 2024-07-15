@@ -4,7 +4,8 @@
 import { GoogleApis } from 'googleapis';
 const googleapis = jest.createMockFromModule('googleapis') as GoogleApis;
 
-let authInput;
+// todo get more specific
+let authInput: any;
 
 export const google = {
   auth: {

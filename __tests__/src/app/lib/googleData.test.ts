@@ -18,7 +18,7 @@ describe('getData', () => {
       scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'],
     };
 
-    const data = await getData('TestDeals');
+    await getData('TestDeals');
     expect(await google.auth.getCredentials()).toEqual(expectedAuthInput);
   });
 

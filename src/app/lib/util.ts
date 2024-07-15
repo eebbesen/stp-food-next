@@ -38,7 +38,7 @@ export function getColumnType(column: string): ColumnType {
   return ColumnType.NONE;
 }
 
-type DayOfWeekRange = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type DayOfWeekRange = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 // parse day of week from string, throw error if invalid
 function parseDayOfWeek(input: string): DayOfWeekRange {
