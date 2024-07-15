@@ -1,10 +1,6 @@
 'use server';
 
-const { google } = require('googleapis');
-
-const places = 'Places';
-const deals = 'Deals';
-const log = 'Log';
+import { google } from 'googleapis';
 
 const scopes = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 const auth = new google.auth.GoogleAuth({
@@ -17,23 +13,17 @@ const auth = new google.auth.GoogleAuth({
 });
 const sheets = google.sheets({ version: 'v4', auth: auth });
 
-async function getData(sheet: string) {
+async function getGoogleData(sheet: string) {
+  const time = Date.now();
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
     range: sheet,
   });
   // console.log(response.data.values);
+  console.log('INFO', 'getData call took', Date.now() - time, 'ms');
   return await response.data.values;
 }
 
-export async function getPlaces() {
-  return await getData(places);
-}
-
-export async function getDeals() {
-  return await getData(deals);
-}
-
-export async function getLog() {
-  return await getData(log);
+export async function getData(sheet: string) {
+  return await getGoogleData(sheet);
 }
