@@ -9,7 +9,10 @@ describe('DealRow', () => {
     render(
       <table>
         <tbody>
-          <DealRow columns={['Test Place', address, 'Test Deal']} />
+          <DealRow
+            columns={['Test Place', address, 'Test Deal']}
+            displayColumns={[0, 1, 2]}
+          />
         </tbody>
       </table>,
     );

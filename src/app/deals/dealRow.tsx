@@ -1,11 +1,20 @@
 import { mapAddress, displayAddress } from '../lib/util';
 
-export default function DealRow({ columns }: { columns: string[] }) {
+export default function DealRow({
+  columns,
+  displayColumns,
+}: {
+  columns: string[];
+  displayColumns: number[];
+}) {
   return (
     <tr className="dealRow">
-      {columns.map((column: string) => (
-        <td key={column}>{column}</td>
-      ))}
+      {columns.map((column: string) => {
+        const index = columns.indexOf(column);
+        if (displayColumns.includes(index)) {
+          return <td key={column}>{column}</td>;
+        }
+      })}
       {/* <td>{placeName}</td>
       <td>{dealDesc}</td>
       <td>

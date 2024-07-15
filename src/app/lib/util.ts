@@ -38,6 +38,17 @@ export function getColumnType(column: string): ColumnType {
   return ColumnType.NONE;
 }
 
+// get columns that will be displayed
+export function getDisplayColumns(headers: string[]): number[] {
+  return headers
+    .map((header, index: number) => {
+      if (header.startsWith('👁️')) {
+        return index;
+      }
+    })
+    .filter((column) => column !== undefined) as number[];
+}
+
 export type DayOfWeekRange = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 // parse day of week from string, throw error if invalid

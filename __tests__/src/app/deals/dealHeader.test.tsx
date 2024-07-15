@@ -8,7 +8,10 @@ describe('DealHeader', () => {
     render(
       <table>
         <thead>
-          <DealHeader headers={['Place', 'Deal', 'Address']} />
+          <DealHeader
+            headers={['Place', 'Deal', 'Address']}
+            displayColumns={[0, 1, 2]}
+          />
         </thead>
       </table>,
     );
@@ -22,7 +25,7 @@ describe('DealHeader', () => {
     render(
       <table>
         <thead>
-          <DealHeader headers={[]} />
+          <DealHeader headers={[]} displayColumns={[]} />
         </thead>
       </table>,
     );

@@ -1,6 +1,7 @@
 import {
   displayAddress,
   getColumnType,
+  getDisplayColumns,
   getForDay,
   mapAddress,
 } from '../../../../src/app/lib/util';
@@ -119,5 +120,19 @@ describe('getForDay', () => {
     ];
 
     expect(() => getForDay(deals, 0, 1)).toThrow('Invalid day of week: 7');
+  });
+});
+
+describe('getDisplayColumns', () => {
+  it('should return indexes with 👁️ prefix', () => {
+    const headers = ['PlaceID', 'Day🗓️', '👁️Deal', '👁️Address📍', '👁️Name'];
+
+    expect(getDisplayColumns(headers)).toEqual([2, 3, 4]);
+  });
+
+  it('should return empty array when none displayed', () => {
+    const headers = ['PlaceID', 'Day🗓️', 'Deal', 'Address📍', 'Name'];
+
+    expect(getDisplayColumns(headers)).toEqual([]);
   });
 });
