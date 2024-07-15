@@ -1,7 +1,8 @@
 import {
-  mapAddress,
   displayAddress,
   getColumnType,
+  getForDay,
+  mapAddress,
 } from '../../../../src/app/lib/util';
 import { ColumnType } from '../../../../src/app/lib/ColumnType';
 
@@ -61,5 +62,62 @@ describe('getColumnType', () => {
     const column = 'Deal Day';
 
     expect(getColumnType(column)).toBe(ColumnType.NONE);
+  });
+});
+
+describe('getForDay', () => {
+  it('should filter deals by day of week', () => {
+    const deals = [
+      ['1', 'Deal 1', 'Address 1'],
+      ['2', 'Deal 2', 'Address 2'],
+      ['1', 'Deal 3', 'Address 3'],
+    ];
+
+    const expected = [
+      ['1', 'Deal 1', 'Address 1'],
+      ['1', 'Deal 3', 'Address 3'],
+    ];
+
+    expect(getForDay(deals, 0, 1)).toEqual(expected);
+  });
+
+  it('returns empty array with no match', () => {
+    const deals = [
+      ['1', 'Deal 1', 'Address 1'],
+      ['2', 'Deal 2', 'Address 2'],
+      ['1', 'Deal 3', 'Address 3'],
+    ];
+
+    expect(getForDay(deals, 0, 3)).toEqual([]);
+  });
+
+  it('throws error when NaN', () => {
+    const deals = [
+      ['1', 'Deal 1', 'Address 1'],
+      ['2', 'Deal 2', 'Address 2'],
+      ['1', 'Deal 3', 'Address 3'],
+    ];
+
+    expect(() => getForDay(deals, 1, 1)).toThrow('Invalid day of week: Deal 1');
+  });
+
+  it('throws error when < 0', () => {
+    const deals = [
+      ['1', 'Deal 1', 'Address 1'],
+      ['-1', 'Deal 2', 'Address 2'],
+      ['1', 'Deal 3', 'Address 3'],
+    ];
+
+    expect(() => getForDay(deals, 0, 1)).toThrow('Invalid day of week: -1');
+  });
+
+  it('throws error when > 6', () => {
+    const deals = [
+      ['1', 'Deal 1', 'Address 1'],
+      ['7', 'Deal 2', 'Address 2'],
+      ['1', 'Deal 3', 'Address 3'],
+    ];
+
+    expect(() => getForDay(deals, 0, 1)).toThrow('Invalid day of week: 7');
   });
 });
