@@ -2,6 +2,7 @@ import {
   displayAddress,
   getColumnType,
   getDisplayColumns,
+  getDisplayColumnsFilter,
   getForDay,
   mapAddress,
 } from '../../../../src/app/lib/util';
@@ -123,16 +124,34 @@ describe('getForDay', () => {
   });
 });
 
-describe('getDisplayColumns', () => {
+describe('getDisplayColumnsFilter', () => {
   it('should return indexes with 👁️ prefix', () => {
     const headers = ['PlaceID', 'Day🗓️', '👁️Deal', '👁️Address📍', '👁️Name'];
 
-    expect(getDisplayColumns(headers)).toEqual([2, 3, 4]);
+    expect(getDisplayColumnsFilter(headers)).toEqual([2, 3, 4]);
   });
 
   it('should return empty array when none displayed', () => {
     const headers = ['PlaceID', 'Day🗓️', 'Deal', 'Address📍', 'Name'];
 
-    expect(getDisplayColumns(headers)).toEqual([]);
+    expect(getDisplayColumnsFilter(headers)).toEqual([]);
+  });
+});
+
+describe('getDisplayColumns', () => {
+  it('should return indexes with 👁️ prefix', () => {
+    const headers = ['PlaceID', 'Day🗓️', '👁️Deal', '👁️Address📍', '👁️Name'];
+
+    expect(getDisplayColumns(headers, [2, 3, 4])).toEqual([
+      '👁️Deal',
+      '👁️Address📍',
+      '👁️Name',
+    ]);
+  });
+
+  it('should return empty array when none displayed', () => {
+    const headers = ['PlaceID', 'Day🗓️', 'Deal', 'Address📍', 'Name'];
+
+    expect(getDisplayColumns(headers, [])).toEqual([]);
   });
 });

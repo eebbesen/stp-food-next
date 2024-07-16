@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 
 import { getData } from '../lib/googleData';
-import { getColumnType, getDisplayColumns, getForDay } from '../lib/util';
+import {
+  getColumnType,
+  getDisplayColumns,
+  getDisplayColumnsFilter,
+  getForDay,
+} from '../lib/util';
 import { ColumnType } from '../lib/ColumnType';
 import DealHeader from './dealHeader';
 import DealRow from './dealRow';
@@ -25,7 +30,7 @@ export default function DealTable({
   if (!deals || deals.length === 0) return <p>No deal data</p>;
 
   const headers: string[] = deals[0];
-  const displayColumns: number[] = getDisplayColumns(headers);
+  const displayColumnsFilter = getDisplayColumnsFilter(headers);
   const headerTypes: ColumnType[] = headers.map((header) =>
     getColumnType(header),
   );
@@ -42,17 +47,16 @@ export default function DealTable({
   return (
     <table className="dealTable">
       <thead>
-        <DealHeader headers={headers} displayColumns={displayColumns} />
+        <DealHeader
+          headers={getDisplayColumns(headers, displayColumnsFilter)}
+        />
       </thead>
       <tbody>
-        {dealRows.map((deal: string[]) => (
+        {dealRows.map((deal: string[]) => {
+          const d = getDisplayColumns(deal, displayColumnsFilter);
           // todo: better key algorithm
-          <DealRow
-            key={deal.toString()}
-            columns={deal}
-            displayColumns={displayColumns}
-          />
-        ))}
+          return <DealRow key={d.toString()} columns={d} />;
+        })}
       </tbody>
     </table>
   );

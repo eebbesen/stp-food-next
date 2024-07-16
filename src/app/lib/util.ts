@@ -39,7 +39,7 @@ export function getColumnType(column: string): ColumnType {
 }
 
 // get columns that will be displayed
-export function getDisplayColumns(headers: string[]): number[] {
+export function getDisplayColumnsFilter(headers: string[]): number[] {
   return headers
     .map((header, index: number) => {
       if (header.startsWith('👁️')) {
@@ -47,6 +47,13 @@ export function getDisplayColumns(headers: string[]): number[] {
       }
     })
     .filter((column) => column !== undefined) as number[];
+}
+
+export function getDisplayColumns(
+  columns: string[],
+  indexes: number[],
+): string[] {
+  return indexes.map((index) => columns[index]);
 }
 
 export type DayOfWeekRange = 0 | 1 | 2 | 3 | 4 | 5 | 6;
