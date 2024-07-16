@@ -38,7 +38,25 @@ export function getColumnType(column: string): ColumnType {
   return ColumnType.NONE;
 }
 
-type DayOfWeekRange = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+// get columns that will be displayed
+export function getDisplayColumnsFilter(headers: string[]): number[] {
+  return headers
+    .map((header, index: number) => {
+      if (header.startsWith('👁️')) {
+        return index;
+      }
+    })
+    .filter((column) => column !== undefined) as number[];
+}
+
+export function getDisplayColumns(
+  columns: string[],
+  indexes: number[],
+): string[] {
+  return indexes.map((index) => columns[index]);
+}
+
+export type DayOfWeekRange = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 // parse day of week from string, throw error if invalid
 function parseDayOfWeek(input: string): DayOfWeekRange {

@@ -1,10 +1,16 @@
 import { useState, useEffect } from 'react';
 
 import { getData } from '../lib/googleData';
-import { getColumnType, getForDay } from '../lib/util';
+import {
+  getColumnType,
+  getDisplayColumns,
+  getDisplayColumnsFilter,
+  getForDay,
+} from '../lib/util';
 import { ColumnType } from '../lib/ColumnType';
 import DealHeader from './dealHeader';
 import DealRow from './dealRow';
+import { DayOfWeekRange } from '../lib/util';
 
 export default function DealTable({
   todayOnly,
@@ -24,6 +30,7 @@ export default function DealTable({
   if (!deals || deals.length === 0) return <p>No deal data</p>;
 
   const headers: string[] = deals[0];
+  const displayColumnsFilter = getDisplayColumnsFilter(headers);
   const headerTypes: ColumnType[] = headers.map((header) =>
     getColumnType(header),
   );
@@ -33,19 +40,23 @@ export default function DealTable({
     const dayIndex = headerTypes.findIndex(
       (header) => header === ColumnType.DAY_OF_WEEK,
     );
-    dealRows = getForDay(dealRows, dayIndex, new Date().getDay());
+    const currentDay: DayOfWeekRange = new Date().getDay() as DayOfWeekRange;
+    dealRows = getForDay(dealRows, dayIndex, currentDay);
   }
 
   return (
     <table className="dealTable">
       <thead>
-        <DealHeader headers={headers} />
+        <DealHeader
+          headers={getDisplayColumns(headers, displayColumnsFilter)}
+        />
       </thead>
       <tbody>
-        {dealRows.map((deal: string[]) => (
+        {dealRows.map((deal: string[]) => {
+          const d = getDisplayColumns(deal, displayColumnsFilter);
           // todo: better key algorithm
-          <DealRow key={deal.toString()} columns={deal} />
-        ))}
+          return <DealRow key={d.toString()} columns={d} />;
+        })}
       </tbody>
     </table>
   );

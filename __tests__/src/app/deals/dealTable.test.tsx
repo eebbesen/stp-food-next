@@ -10,7 +10,7 @@ const tomorrow = today === 6 ? 0 : today + 1;
 jest.mock('../../../../src/app/lib/googleData', () => ({
   getData: jest.fn((input) =>
     Promise.resolve([
-      ['PlaceID🔑', 'Name', 'Day🗓️', 'Deal', 'Address📍'],
+      ['PlaceID🔑', '👁️Name', 'Day🗓️', '👁️Deal', '👁️Address📍'],
       [
         1,
         'Afro Deli',
@@ -54,7 +54,7 @@ jest.mock('../../../../src/app/lib/googleData', () => ({
         '456 Main St, Saint Paul, MN 55101',
       ],
       [
-        5,
+        525,
         'Sushi Sushi',
         `${tomorrow}`,
         'Sushi',
@@ -86,7 +86,7 @@ describe('DealTable', () => {
     });
   });
 
-  it('renders a deal table with all days', async () => {
+  it("renders a deal table with only today's deals", async () => {
     render(<DealTable todayOnly={true} />);
 
     await waitFor(() => {
@@ -94,6 +94,23 @@ describe('DealTable', () => {
       expect(screen.getByText('Wings')).toBeInTheDocument();
       expect(screen.getByText('Pizza')).toBeInTheDocument();
       expect(screen.getByText('Fries')).toBeInTheDocument();
+    });
+  });
+
+  it('renders a only visible columns', async () => {
+    render(<DealTable />);
+
+    await waitFor(() => {
+      expect(screen.queryByText('PlaceID🔑')).toBeNull();
+      expect(screen.queryByText('525')).toBeNull();
+      expect(screen.getByText('👁️Name')).toBeInTheDocument();
+      expect(screen.getByText('👁️Deal')).toBeInTheDocument();
+      expect(screen.getByText('👁️Address📍')).toBeInTheDocument();
+      expect(screen.getAllByText('Afro Deli').length).toBe(2);
+      expect(screen.getByText('Gyro')).toBeInTheDocument();
+      expect(
+        screen.getAllByText('123 Main St, Saint Paul, MN 55101').length,
+      ).toBe(2);
     });
   });
 });
