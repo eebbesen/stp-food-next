@@ -76,3 +76,7 @@ export function getForDay(
 ): string[][] {
   return deals.filter((deal) => parseDayOfWeek(deal[dayIndex]) === dayValue);
 }
+
+export function scrubEmojis(text: string): string {
+  return text.replace(/👁️|🔑|🗓️|📍/g, '');
+}
