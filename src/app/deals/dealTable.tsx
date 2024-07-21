@@ -66,8 +66,6 @@ export default function DealTable({
           {dealRows.map((deal: string[]) => {
             const d = getDisplayColumns(deal, displayColumnsFilter);
             // todo: better key algorithm
-            console.log('ADDR', addressIndex, d);
-
             return (
               <DealRow
                 key={d.toString()}
