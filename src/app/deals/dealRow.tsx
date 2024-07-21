@@ -1,21 +1,31 @@
 import { mapAddress, displayAddress } from '../lib/util';
 
-export default function DealRow({ columns }: { columns: string[] }) {
+function formatAddressColumn(
+  column: string,
+  isAddress: boolean,
+): string | JSX.Element {
+  if (!isAddress) return column;
+
+  return <a href={mapAddress(column)}>{displayAddress(column)}</a>;
+}
+
+export default function DealRow({
+  columns,
+  addressIndex,
+}: {
+  columns: string[];
+  addressIndex: number;
+}) {
   return (
     <tr className="dealRow">
-      {columns.map((column: string) => (
+      {columns.map((column: string, index: number) => (
         <td
           className="border-solid border-2 border-slate-300 px-2 py-1"
           key={column}
         >
-          {column}
+          {formatAddressColumn(column, index === addressIndex)}
         </td>
       ))}
-      {/* <td>{placeName}</td>
-      <td>{dealDesc}</td>
-      <td>
-        <a href={mapAddress(placeAddress)}>{displayAddress(placeAddress)}</a>
-      </td> */}
     </tr>
   );
 }

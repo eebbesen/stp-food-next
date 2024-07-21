@@ -34,6 +34,10 @@ export default function DealTable({
   const headerTypes: ColumnType[] = headers.map((header) =>
     getColumnType(header),
   );
+  const addressIndex = headerTypes.findIndex(
+    (header) => header === ColumnType.ADDRESS,
+  );
+
   let dealRows: string[][] = deals.slice(1);
 
   if (todayOnly) {
@@ -62,7 +66,15 @@ export default function DealTable({
           {dealRows.map((deal: string[]) => {
             const d = getDisplayColumns(deal, displayColumnsFilter);
             // todo: better key algorithm
-            return <DealRow key={d.toString()} columns={d} />;
+            console.log('ADDR', addressIndex, d);
+
+            return (
+              <DealRow
+                key={d.toString()}
+                columns={d}
+                addressIndex={displayColumnsFilter.indexOf(addressIndex)}
+              />
+            );
           })}
         </tbody>
       </table>

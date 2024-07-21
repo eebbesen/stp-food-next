@@ -113,9 +113,7 @@ describe('DealTable', () => {
       expect(screen.getByText('Address')).toBeInTheDocument();
       expect(screen.getAllByText('Afro Deli').length).toBe(2);
       expect(screen.getByText('Gyro')).toBeInTheDocument();
-      expect(
-        screen.getAllByText('123 Main St, Saint Paul, MN 55101').length,
-      ).toBe(2);
+      expect(screen.getAllByText('123 Main St').length).toBe(2);
     });
   });
 });
