@@ -5,6 +5,7 @@ import {
   getDisplayColumnsFilter,
   getForDay,
   mapAddress,
+  scrubEmojis,
 } from '../../../../src/app/lib/util';
 import { ColumnType } from '../../../../src/app/lib/ColumnType';
 
@@ -153,5 +154,19 @@ describe('getDisplayColumns', () => {
     const headers = ['PlaceID', 'Day🗓️', 'Deal', 'Address📍', 'Name'];
 
     expect(getDisplayColumns(headers, [])).toEqual([]);
+  });
+});
+
+describe('scrubEmojis', () => {
+  it('should remove emoji from header', () => {
+    expect(scrubEmojis('👁️Col🔑 Name🗓️📍')).toBe('Col Name');
+  });
+
+  it('should rertain emojiless header', () => {
+    expect(scrubEmojis('Col Name')).toBe('Col Name');
+  });
+
+  it('should remove multiple of the same emoji', () => {
+    expect(scrubEmojis('🗓️Col 🗓️Name🗓️')).toBe('Col Name');
   });
 });

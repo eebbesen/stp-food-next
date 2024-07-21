@@ -1,8 +1,12 @@
+import { scrubEmojis } from '../lib/util';
+
 export default function DealHeader({ headers }: { headers: string[] }) {
   return (
-    <tr className="dealHeader">
+    <tr className="bg-slate-50 text-black dealHeader">
       {headers.map((column: string) => (
-        <th key={column}>{column}</th>
+        <th className="border-solid border-2 border-slate-300" key={column}>
+          {scrubEmojis(column)}
+        </th>
       ))}
     </tr>
   );

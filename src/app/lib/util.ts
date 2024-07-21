@@ -1,5 +1,7 @@
 import { ColumnType } from './ColumnType';
 
+const CITY_ALIASES = ['St. Paul', 'Saint Paul', 'St Paul'];
+
 // convert address to Google Maps URL
 export function mapAddress(address: string): string {
   return `https://www.google.com/maps/place/${encodeURIComponent(address)}`;
@@ -7,14 +9,16 @@ export function mapAddress(address: string): string {
 
 // remove city/state/zip from address
 export function displayAddress(address: string): string {
-  let ind = address.lastIndexOf('St. Paul');
-  if (ind === -1) {
-    ind = address.lastIndexOf('Saint Paul');
-  }
+  let ind = address.length;
 
-  if (ind === -1) {
-    return address;
-  }
+  CITY_ALIASES.forEach((city) => {
+    const newInd = address.lastIndexOf(city);
+    if (newInd > -1) {
+      ind = newInd;
+    }
+  });
+
+  CITY_ALIASES.some((city) => {});
 
   let ret = address.substring(0, ind).trim();
 
@@ -75,4 +79,8 @@ export function getForDay(
   dayValue: DayOfWeekRange,
 ): string[][] {
   return deals.filter((deal) => parseDayOfWeek(deal[dayIndex]) === dayValue);
+}
+
+export function scrubEmojis(text: string): string {
+  return text.replace(/👁️|🔑|🗓️|📍/g, '');
 }

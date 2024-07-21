@@ -1,5 +1,6 @@
 'use server';
 
+// import { unstable_cache } from 'next/cache';
 import { google } from 'googleapis';
 
 const scopes = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
@@ -24,6 +25,19 @@ async function getGoogleData(sheet: string) {
   return await response.data.values;
 }
 
+// getting `Error: Invariant: incrementalCache missing in unstable_cache`
+//   when running tests with the following cache implementaiton
+//
+// const getCachedGoogleData = unstable_cache(
+//   async (sheet: string) => getGoogleData(sheet),
+//   [],
+//   { revalidate: 60 },
+// );
+
+// export async function getData(sheet: string) {
+// }
+
 export async function getData(sheet: string) {
   return await getGoogleData(sheet);
+  //   return await getCachedGoogleData(sheet);
 }

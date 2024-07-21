@@ -6,6 +6,7 @@ import DealTable from '../../../../src/app/deals/dealTable';
 const today = new Date().getDay();
 const yesterday = today === 0 ? 6 : today - 1;
 const tomorrow = today === 6 ? 0 : today + 1;
+const todayString = new Date().toLocaleString('en-us', { weekday: 'long' });
 
 jest.mock('../../../../src/app/lib/googleData', () => ({
   getData: jest.fn((input) =>
@@ -79,6 +80,7 @@ describe('DealTable', () => {
     render(<DealTable />);
 
     await waitFor(() => {
+      expect(screen.getByText(`Deals for ${todayString}`)).toBeInTheDocument();
       expect(screen.getByText('Gyro')).toBeInTheDocument();
       expect(screen.getByText('Wings')).toBeInTheDocument();
       expect(screen.getByText('Pizza')).toBeInTheDocument();
@@ -91,6 +93,7 @@ describe('DealTable', () => {
 
     await waitFor(() => {
       expect(screen.queryByText('Gyro')).toBeNull();
+      expect(screen.getByText(`Deals for ${todayString}`)).toBeInTheDocument();
       expect(screen.getByText('Wings')).toBeInTheDocument();
       expect(screen.getByText('Pizza')).toBeInTheDocument();
       expect(screen.getByText('Fries')).toBeInTheDocument();
@@ -101,16 +104,16 @@ describe('DealTable', () => {
     render(<DealTable />);
 
     await waitFor(() => {
+      expect(screen.queryByText('PlaceID')).toBeNull();
       expect(screen.queryByText('PlaceID🔑')).toBeNull();
       expect(screen.queryByText('525')).toBeNull();
-      expect(screen.getByText('👁️Name')).toBeInTheDocument();
-      expect(screen.getByText('👁️Deal')).toBeInTheDocument();
-      expect(screen.getByText('👁️Address📍')).toBeInTheDocument();
+      expect(screen.getByText(`Deals for ${todayString}`)).toBeInTheDocument();
+      expect(screen.getByText('Name')).toBeInTheDocument();
+      expect(screen.getByText('Deal')).toBeInTheDocument();
+      expect(screen.getByText('Address')).toBeInTheDocument();
       expect(screen.getAllByText('Afro Deli').length).toBe(2);
       expect(screen.getByText('Gyro')).toBeInTheDocument();
-      expect(
-        screen.getAllByText('123 Main St, Saint Paul, MN 55101').length,
-      ).toBe(2);
+      expect(screen.getAllByText('123 Main St').length).toBe(2);
     });
   });
 });
