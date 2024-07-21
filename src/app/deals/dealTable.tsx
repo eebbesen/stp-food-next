@@ -45,7 +45,7 @@ export default function DealTable({
   }
 
   return (
-    <table className="dealTable">
+    <table className="table-auto border-solid border-2" id="main-table">
       <thead>
         <DealHeader
           headers={getDisplayColumns(headers, displayColumnsFilter)}
