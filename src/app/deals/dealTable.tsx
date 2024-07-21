@@ -45,22 +45,27 @@ export default function DealTable({
   }
 
   return (
-    <table
-      className="table-auto border-solid border-2 border-slate-300"
-      id="main-table"
-    >
-      <thead>
-        <DealHeader
-          headers={getDisplayColumns(headers, displayColumnsFilter)}
-        />
-      </thead>
-      <tbody>
-        {dealRows.map((deal: string[]) => {
-          const d = getDisplayColumns(deal, displayColumnsFilter);
-          // todo: better key algorithm
-          return <DealRow key={d.toString()} columns={d} />;
-        })}
-      </tbody>
-    </table>
+    <div>
+      <div className="text-4xl text-center mb-3" id="headline">
+        Deals for {new Date().toLocaleString('en-us', { weekday: 'long' })}
+      </div>
+      <table
+        className="table-auto border-solid border-2 border-slate-300"
+        id="main-table"
+      >
+        <thead>
+          <DealHeader
+            headers={getDisplayColumns(headers, displayColumnsFilter)}
+          />
+        </thead>
+        <tbody>
+          {dealRows.map((deal: string[]) => {
+            const d = getDisplayColumns(deal, displayColumnsFilter);
+            // todo: better key algorithm
+            return <DealRow key={d.toString()} columns={d} />;
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 }
